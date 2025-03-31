@@ -2,7 +2,7 @@ name: Punch In
 
 on:
   schedule:
-    - cron: "55 0 * * *"  # 修正为 UTC 0:55（对应北京时间 8:55）
+    - cron: "25 0 * * *"  # 修正为 UTC 0:55（对应北京时间 8:55）
   workflow_dispatch:
 
 jobs:
@@ -19,4 +19,4 @@ jobs:
 
       - name: "Punch In"
         run: ./punch_in
-        timeout-minutes: 10        # 防止脚本卡死
+        timeout-minutes: 5        # 防止脚本卡死
