@@ -2,16 +2,21 @@ name: Punch In
 
 on:
   schedule:
-    - cron: 55 8 * * *
+    - cron: "55 0 * * *"  # 修正为 UTC 0:55（对应北京时间 8:55）
   workflow_dispatch:
 
 jobs:
   punch_in:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest  # 使用最新版系统镜像
     env:
       ACCOUNTS: ${{ secrets.ACCOUNTS }}
     steps:
-      - name: "checkout"
-        uses: actions/checkout@v1
-      - name: "Punch in"
+      - name: "Checkout Code"
+        uses: actions/checkout@v4  # 升级到最新稳定版
+
+      - name: "Add Execute Permission"
+        run: chmod +x punch_in    # 必须添加可执行权限
+
+      - name: "Punch In"
         run: ./punch_in
+        timeout-minutes: 10        # 防止脚本卡死
